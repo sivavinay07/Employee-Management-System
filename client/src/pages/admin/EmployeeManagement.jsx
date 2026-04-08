@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import toast from 'react-hot-toast';
 import { Plus, Search, Edit2 } from 'lucide-react';
 
@@ -18,7 +19,7 @@ const EmployeeManagement = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/employees');
+      const res = await axios.get(`${API_URL}/employees`);
       setEmployees(res.data);
     } catch (err) {
       toast.error('Failed to load employees');
@@ -32,7 +33,7 @@ const EmployeeManagement = () => {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/employees', formData);
+      await axios.post(`${API_URL}/employees`, formData);
       toast.success('Employee added successfully');
       setShowForm(false);
       setFormData({ name: '', email: '', password: '', department: '', designation: '', basicSalary: 0 });
@@ -45,7 +46,7 @@ const EmployeeManagement = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/employees/${editingId}`, editData);
+      await axios.put(`${API_URL}/employees/${editingId}`, editData);
       toast.success('Employee updated successfully');
       setEditingId(null);
       fetchEmployees();
@@ -57,7 +58,7 @@ const EmployeeManagement = () => {
   const toggleStatus = async (employee) => {
     try {
       const newStatus = employee.status === 'active' ? 'inactive' : 'active';
-      await axios.put(`http://localhost:5000/api/employees/${employee._id}`, { status: newStatus });
+      await axios.put(`${API_URL}/employees/${employee._id}`, { status: newStatus });
       toast.success(`Employee ${newStatus === 'active' ? 'activated' : 'deactivated'}`);
       fetchEmployees();
     } catch (err) {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import { Calendar, Wallet, CheckCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -12,9 +13,9 @@ const EmployeeDashboard = () => {
     const fetchOverview = async () => {
       try {
         const [attRes, leaveRes, payRes] = await Promise.all([
-           axios.get('http://localhost:5000/api/attendance'),
-           axios.get('http://localhost:5000/api/leaves'),
-           axios.get('http://localhost:5000/api/payslips')
+           axios.get(`${API_URL}/attendance`),
+           axios.get(`${API_URL}/leaves`),
+           axios.get(`${API_URL}/payslips`)
         ]);
         
         setStats({

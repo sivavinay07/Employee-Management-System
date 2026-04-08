@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import toast from 'react-hot-toast';
 import { Search, Clock } from 'lucide-react';
 
@@ -9,7 +10,7 @@ const AdminAttendance = () => {
 
   const fetchAllAttendance = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/attendance');
+      const res = await axios.get(`${API_URL}/attendance`);
       setHistory(res.data);
     } catch (err) {
       toast.error('Failed to load attendance records');

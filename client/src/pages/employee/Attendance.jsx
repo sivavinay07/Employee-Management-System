@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import toast from 'react-hot-toast';
 import { LogIn, LogOut } from 'lucide-react';
 
@@ -9,7 +10,7 @@ const Attendance = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/attendance');
+      const res = await axios.get(`${API_URL}/attendance`);
       setHistory(res.data);
 
       // Determine if clocked in today
@@ -31,7 +32,7 @@ const Attendance = () => {
 
   const handleClockIn = async () => {
     try {
-      await axios.post('http://localhost:5000/api/attendance/clock-in');
+      await axios.post(`${API_URL}/attendance/clock-in`);
       toast.success('Clocked in successfully');
       setClockedIn(true);
       fetchHistory();
@@ -42,7 +43,7 @@ const Attendance = () => {
 
   const handleClockOut = async () => {
     try {
-      await axios.put('http://localhost:5000/api/attendance/clock-out');
+      await axios.put(`${API_URL}/attendance/clock-out`);
       toast.success('Clocked out successfully');
       setClockedIn(false);
       fetchHistory();

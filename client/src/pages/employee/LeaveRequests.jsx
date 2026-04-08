@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import toast from 'react-hot-toast';
 
 const LeaveRequests = () => {
@@ -14,7 +15,7 @@ const LeaveRequests = () => {
 
   const fetchLeaves = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/leaves');
+      const res = await axios.get(`${API_URL}/leaves`);
       setLeaves(res.data);
     } catch (err) {
       toast.error('Failed to load leave history');
@@ -28,7 +29,7 @@ const LeaveRequests = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/leaves', formData);
+      await axios.post(`${API_URL}/leaves`, formData);
       toast.success('Leave application submitted');
       setShowForm(false);
       setFormData({ leaveType: 'casual', startDate: '', endDate: '', reason: '' });

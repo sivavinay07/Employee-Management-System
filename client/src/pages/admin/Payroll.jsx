@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import toast from 'react-hot-toast';
 import { Download } from 'lucide-react';
 import { generatePayslipPDF } from '../../utils/payslipPDF';
@@ -21,8 +22,8 @@ const Payroll = () => {
   const fetchData = async () => {
     try {
       const [psRes, empRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/payslips'),
-        axios.get('http://localhost:5000/api/employees')
+        axios.get(`${API_URL}/payslips`),
+        axios.get(`${API_URL}/employees`)
       ]);
       setPayslips(psRes.data);
       setEmployees(empRes.data);
@@ -38,7 +39,7 @@ const Payroll = () => {
   const handleGenerate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/payslips', formData);
+      await axios.post(`${API_URL}/payslips`, formData);
       toast.success('Payslip generated successfully');
       setShowForm(false);
       fetchData();

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import toast from 'react-hot-toast';
 import { CheckCircle, XCircle } from 'lucide-react';
 
@@ -8,7 +9,7 @@ const LeaveManagement = () => {
 
   const fetchLeaves = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/leaves');
+      const res = await axios.get(`${API_URL}/leaves`);
       setLeaves(res.data);
     } catch (err) {
       toast.error('Failed to load leave applications');
@@ -21,7 +22,7 @@ const LeaveManagement = () => {
 
   const handleStatusUpdate = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/leaves/${id}`, { status });
+      await axios.put(`${API_URL}/leaves/${id}`, { status });
       toast.success(`Leave ${status} successfully`);
       fetchLeaves();
     } catch (err) {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Users, Building, ClipboardCheck, ArrowUpRight } from 'lucide-react';
 import axios from 'axios';
+import { API_URL } from '../../utils/api';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 
 const AdminDashboard = () => {
@@ -14,9 +15,9 @@ const AdminDashboard = () => {
     const fetchStats = async () => {
       try {
         const [empRes, attRes, leaveRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/employees'),
-          axios.get('http://localhost:5000/api/attendance'),
-          axios.get('http://localhost:5000/api/leaves')
+          axios.get(`${API_URL}/employees`),
+          axios.get(`${API_URL}/attendance`),
+          axios.get(`${API_URL}/leaves`)
         ]);
         
         const today = new Date().setHours(0, 0, 0, 0);
