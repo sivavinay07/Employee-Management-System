@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getEmployees, getEmployeeById, addEmployee, updateEmployee } = require('../controllers/employeeController');
+const { getEmployees, getEmployeeById, addEmployee, updateEmployee, deleteEmployee } = require('../controllers/employeeController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 router.route('/')
@@ -9,6 +9,7 @@ router.route('/')
 
 router.route('/:id')
   .get(protect, getEmployeeById)
-  .put(protect, admin, updateEmployee);
+  .put(protect, admin, updateEmployee)
+  .delete(protect, admin, deleteEmployee);
 
 module.exports = router;

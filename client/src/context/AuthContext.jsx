@@ -26,7 +26,8 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
       return { success: true };
     } catch (error) {
-      return { success: false, message: error.response?.data?.message || 'Login failed' };
+      const errorMsg = error.response?.data?.message || error.message || 'Login failed';
+      return { success: false, message: errorMsg };
     }
   };
 

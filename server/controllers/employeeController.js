@@ -85,4 +85,20 @@ const updateEmployee = async (req, res) => {
   }
 };
 
-module.exports = { getEmployees, getEmployeeById, addEmployee, updateEmployee };
+const deleteEmployee = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+    if (user.role === 'admin') {
+      return res.status(403).json({ message: 'Cannot delete an admin account' });
+    }
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Employee removed successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getEmployees, getEmployeeById, addEmployee, updateEmployee, deleteEmployee };
